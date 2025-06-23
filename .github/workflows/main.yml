@@ -45,5 +45,6 @@ jobs:
             kubectl create deployment cont --image=cont
             
             kubectl expose deployment cont --port=3000 --type=NodePort
+            sleep 10
             kubectl port-forward --address 0.0.0.0 service/cont 3000:3000
           EOF

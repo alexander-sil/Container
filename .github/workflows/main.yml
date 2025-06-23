@@ -41,7 +41,7 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/cont:latest
             minikube delete
 
-            minikube start --driver=docker --memory=2000mb --force
+            minikube start --driver=docker --memory=2048mb --force
             kubectl create deployment cont --image=${{ secrets.DOCKER_USERNAME }}/cont:latest
             
             kubectl expose deployment cont --port=3000 --type=NodePort

@@ -45,6 +45,6 @@ jobs:
             kubectl create deployment cont --image=${{ secrets.DOCKER_USERNAME }}/cont:latest
             
             kubectl expose deployment cont --port=3000 --type=NodePort
-            sleep 10
+            kubectl rollout status deployment cont
             kubectl port-forward --address 0.0.0.0 service/cont 3000:3000
           EOF

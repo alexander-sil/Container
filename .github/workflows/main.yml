@@ -42,7 +42,7 @@ jobs:
             minikube delete
 
             minikube start --driver=docker --memory=2000mb --force
-            kubectl create deployment cont --image=cont
+            kubectl create deployment cont --image=${{ secrets.DOCKER_USERNAME }}/cont:latest
             
             kubectl expose deployment cont --port=3000 --type=NodePort
             sleep 10

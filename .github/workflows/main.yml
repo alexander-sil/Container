@@ -42,9 +42,9 @@ jobs:
             minikube delete
 
             minikube start --driver=docker --memory=2048mb --force
-            kubectl create deployment cont --image=${{ secrets.DOCKER_USERNAME }}/cont:latest
+            minikube kubectl create deployment cont --image=${{ secrets.DOCKER_USERNAME }}/cont:latest
             
-            kubectl expose deployment cont --port=3000 --type=NodePort
-            kubectl rollout status deployment cont
-            kubectl port-forward --address 0.0.0.0 service/cont 3000:3000 &
+            minikube kubectl expose deployment cont --port=3000 --type=NodePort
+            minikube kubectl rollout status deployment cont
+            minikube kubectl port-forward --address 0.0.0.0 service/cont 3000:3000 &
           EOF

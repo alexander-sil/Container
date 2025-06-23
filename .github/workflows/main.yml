@@ -44,6 +44,5 @@ jobs:
             minikube start --driver=docker --memory=2000mb --force
             kubectl create deployment cont --image=cont
 
-            iptables -A INPUT -p tcp --dport 3000 -j ACCEPT
             kubectl port-forward --address 0.0.0.0 service/cont 3000:3030
           EOF

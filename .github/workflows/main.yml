@@ -38,13 +38,13 @@ jobs:
       - name: Deploy to VPS (via SSH)
         run: |
           sshpass -p "${{ secrets.ROOT_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << EOF
-            echo ${{ secrets.ROOT_PASSWORD }} | sudo -S docker pull ${{ secrets.DOCKER_USERNAME }}/cont:latest
-            echo ${{ secrets.ROOT_PASSWORD }} | sudo -S minikube delete
+            docker pull ${{ secrets.DOCKER_USERNAME }}/cont:latest
+            minikube delete
 
-            echo ${{ secrets.ROOT_PASSWORD }} | sudo -S minikube start --driver=docker --memory=2048mb --force
-            echo ${{ secrets.ROOT_PASSWORD }} | sudo -S kubectl create deployment cont --image=${{ secrets.DOCKER_USERNAME }}/cont:latest
+            minikube start --driver=docker --memory=2048mb --force
+            kubectl create deployment cont --image=${{ secrets.DOCKER_USERNAME }}/cont:latest
             
-            echo ${{ secrets.ROOT_PASSWORD }} | sudo -S kubectl expose deployment cont --port=3000 --type=NodePort
-            echo ${{ secrets.ROOT_PASSWORD }} | sudo -S kubectl rollout status deployment cont
-            echo ${{ secrets.ROOT_PASSWORD }} | sudo -S kubectl port-forward --address 0.0.0.0 service/cont 3000:3000 &
+            kubectl expose deployment cont --port=3000 --type=NodePort
+            kubectl rollout status deployment cont
+            kubectl port-forward --address 0.0.0.0 service/cont 3000:3000 &
           EOF
